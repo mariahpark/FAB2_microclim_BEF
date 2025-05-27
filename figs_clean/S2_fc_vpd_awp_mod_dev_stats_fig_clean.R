@@ -238,7 +238,7 @@ fig <- ggarrange(plots[[1]],plots[[2]],plots[[3]], plots[[8]],plots[[5]],plots[[
 annotate_figure(
   fig,
   bottom = text_grob(expression("VPD"[amp] ~ " (kPa)"), size = 20),
-  left = text_grob(expression("AWP"[O-E] ~ " (m"^3* ~ "y"^-1* ~ "ha"^-1* ~")"),
+  left = text_grob(expression("AWP"[O-E] ~ " (m"^3* ~ "y"^-1*")"),
                    size = 20, rot = 90, vjust = 1
   )
 )
