@@ -1,4 +1,4 @@
-# Graph of heights for conceptual figure (Fig. 1)
+# Graph of heights for conceptual figure (Fig. 1) 
 
 rm(list=ls())
 #libraries
