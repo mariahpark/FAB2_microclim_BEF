@@ -91,11 +91,11 @@ a.0 <- ggplot(poly, aes(x = vpd_amp,
              shape = 21, 
              colour = "black") + 
   xlim(0.4,1.25)+
-  ylim(-1,32)+
+  ylim(-1,28)+
   colour_PA +
   theme_classic(base_size=14) +
   xlab(" ") +
-  ylab("Overyielding") +
+  ylab(expression("Overyielding (m"^3*" y"^-1*" ha"^-1*")"))+
   stat_smooth(method = "lm",
               formula = y ~ x,
               colour = "black") + 
