@@ -91,7 +91,7 @@ a.0 <- ggplot(poly, aes(x = vpd_amp,
              shape = 21, 
              colour = "black") + 
   xlim(0.4,1.25)+
-  ylim(-1,28)+
+  ylim(-1,25)+
   colour_PA +
   theme_classic(base_size=14) +
   xlab(" ") +
