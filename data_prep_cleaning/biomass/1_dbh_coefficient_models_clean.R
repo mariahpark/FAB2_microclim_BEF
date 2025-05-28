@@ -14,14 +14,14 @@ library(data.table)
 
 # Read data and format variables
 
-setwd("c:/Users/maria/Desktop/Research/2024/biomass/")
+setwd("c:/Users/maria/Desktop/Research/2024/processed_df/clean.data/MARIA_data_submission")
 df <- read.csv("fab2_growth_and_reproduction_R.csv")
 
 # Height (H), diameter at root collar (DRC), diameter at breast height (DBH)
 
-colnames(df)[29] <- "H"
-colnames(df)[30] <- "drc_mm"
-colnames(df)[31] <- "dbh_mm"
+colnames(df)[30] <- "H"
+colnames(df)[31] <- "drc_mm"
+colnames(df)[32] <- "dbh_mm"
 
 df$DRC <- NA
 df$DBH <- NA
