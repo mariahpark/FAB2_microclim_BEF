@@ -5,6 +5,7 @@ rm(list=ls())
 #libraries
 library(ggplot2)
 library(dplyr)
+library(ggpmisc)
 
 #-------------------------------------------------------------------------------
 setwd("C:/Users/maria/Desktop/Research/2024/processed_df/")
@@ -22,7 +23,7 @@ summary(mod)
 a.0 <- ggplot(plot.dat,aes(x=fges_prop, y=FC))+
   geom_point(shape = 21, size = 4, fill = "black", color ="grey")+
   theme_classic()+
-  xlab("Proportion of FAST species")+
+  xlab("Proportion of FAST")+
   ylab("Fractional cover") +
   stat_smooth(method = "lm",
               formula = y ~ x,
