@@ -10,14 +10,15 @@ library(ggpubr)
 library(lavaan)
 library(semPlot)
 library(xfun)
-library(tidySEM)
+library(car)
+#library(tidySEM)
 
 conflict_prefer("mutate", "dplyr")
 conflict_prefer("summarise", "dplyr")
 conflicts_prefer(dplyr::filter)
 
 setwd("C:/Users/maria/Desktop/Research/2024/processed_df/")
-plot.dat <- read.csv("plot.dat.5.26.25.csv")
+plot.dat <- read.csv("plot.dat.10.9.25.csv")
 
 #-------------------------------------------------------------------------------
 # New variables
@@ -45,6 +46,7 @@ mod.new <- '
           NE.sm ~ vpd_amp + FC_sqrt + PSVs + fges_prop
           
 '
+
 #-------------------------------------------------------------------------------
 # Run the SEM
 sem <- sem(mod.new, data=poly) 
@@ -55,8 +57,26 @@ standardizedSolution(sem, type="std.all")
 fit <- lavInspect(sem, "fit")
 fit["chisq"]; fit["pvalue"]
 
-# AIC: 172.9234
+# AIC: 170.9241
 AIC(sem)
+
+
+#-------------------------------------------------------------------------------
+# Check for multicollinearity: Variance inflation factor (VIF)
+
+lm_test <- lm(FC_sqrt ~ PSVs + fges_prop, data = poly)
+car::vif(lm_test)
+
+lm_test <- lm(vpd_amp ~ FC_sqrt + fges_prop, data = poly)
+car::vif(lm_test)
+
+lm_test <- lm(NE.sm ~ vpd_amp + FC_sqrt + PSVs + fges_prop, data = poly)
+car::vif(lm_test)
+
+lm_test <- lm(NE.sm ~ vpd_amp + PSVs + fges_prop, data = poly)
+car::vif(lm_test)
+
+
 
 # Correlation (standardized) units
 inspect(sem, what="cor.all")

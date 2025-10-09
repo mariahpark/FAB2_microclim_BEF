@@ -204,6 +204,12 @@ colnames(species_inventories)[c(4, 8)] <- c("observed_AWP", "monocultures_AWP")
 species_inventories$expected_AWP <- species_inventories$monocultures_AWP*species_inventories$proportion
 species_inventories <- species_inventories[order(plot_new, species)]
 
+# Return values in density
+#m^3/year/hectare
+species_inventories$observed_AWP_ha <- species_inventories$observed_AWP/0.0081
+species_inventories$expected_AWP_ha <- species_inventories$expected_AWP/0.0081
+
+
 # Productivity calculations for ALL species
 tiam <- filter(species_inventories, species == "Tilia americana")
 acne <- filter(species_inventories, species == "Acer negundo")
@@ -221,8 +227,9 @@ pist <- filter(species_inventories, species == "Pinus strobus")
 # Annual wood production measures for each species
 
 focal.productivity <- rbind(tiam, acne, acru, qual, quru, quel, quma, bepa, juvi, piba, pire, pist)
-focal.productivity$difference_AWP <- focal.productivity$observed_AWP - focal.productivity$expected_AWP
-fwrite(focal.productivity, paste0(root_path, "productivity.small.2024.4.22.25.csv"))
+focal.productivity$difference_AWP <- focal.productivity$observed_AWP_ha - focal.productivity$expected_AWP_ha
+
+fwrite(focal.productivity, paste0(root_path, "productivity.small.2024.10.9.25.csv"))
 #-------------------------------------------------------------------------------
 # Net biodiversity effect (NBE aka overyielding) calculations
 BE <- data.table()

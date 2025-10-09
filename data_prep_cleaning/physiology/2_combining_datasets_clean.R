@@ -13,7 +13,7 @@ setwd("C:/Users/maria/Desktop/Research/2024/processed_df/clean.data/")
 
 licor.dat <- read.csv("2024_licor_R.csv") # LiCOR
 fulcrum.dat <- read.csv("fab2_2024_sampling_R_clean.csv") # Physiology
-microclim.dat <- read.csv("merged_sample_wk_amplitude_df_5_5_25.csv") # Microclimate amplitude
+microclim.dat <- read.csv("merged_sample_wk_amplitude_df_10.9.25.csv") # Microclimate amplitude
 microclim.stats <- read.csv("merged_sample_wk_df_5_1_25_clean.csv") # Microclimate stats
 nbe.dat <- read.csv("small_plot_NBE_2024 (2025-4-22).csv") # NBE
 prop.dat <- read.csv("gymno.fges.calcs.4.22.25.csv") # Gymno and FAST proportions
@@ -23,7 +23,7 @@ spectra.dat <- read.csv("spectral_indices_plsr_jul_24_5_14_25.csv") # Spectra
 lma.dat <- read.csv("lma.2024.R.csv") # LMA; slight manual cleaning so letter cases match UniqueID
 light.dat <- read.csv("light.R.clean.csv") # Light
 div.dat <- read.csv("combined.div.metrics.csv") # Diversity
-prod.dat <- read.csv("productivity.small.2024.4.22.25.csv") # Species productivity
+prod.dat <- read.csv("productivity.small.2024.10.9.25.csv") # Species productivity
 
 #-------------------------------------------------------------------------------
 # Clean and trim data
@@ -128,6 +128,6 @@ dat$lma <- (dat$lma_dry_weight_g)/(dat$total.leaf.area.m2)
 dat$species_code.x <- as.factor(dat$species_code.x)
 
 # Export data
-fwrite(dat, "C:/Users/maria/Desktop/Research/2024/processed_df/combo.dat.2024.5.26.25.csv")
+fwrite(dat, "C:/Users/maria/Desktop/Research/2024/processed_df/combo.dat.2024.10.9.25.csv")
 
 
