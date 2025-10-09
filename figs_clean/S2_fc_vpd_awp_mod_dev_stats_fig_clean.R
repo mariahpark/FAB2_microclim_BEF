@@ -22,8 +22,8 @@ conflicts_prefer(dplyr::filter)
 # Read data
 
 setwd("C:/Users/maria/Desktop/Research/2024/processed_df/")
-plot.dat <- read.csv("plot.dat.5.26.25.csv")
-prod.dat <- read.csv("productivity.small.2024.4.22.25.csv")
+plot.dat <- read.csv("plot.dat.10.9.25.csv")
+prod.dat <- read.csv("productivity.small.2024.10.9.25.csv")
 
 #make a new variable: transformed FC (TFC) = sqrt_FC
 plot.dat$sqrt_FC <- -sqrt(1-plot.dat$FC)
@@ -42,7 +42,7 @@ train_data <- plot.dat %>% filter(!is.na(vpd_amp))
 test_data <- plot.dat %>% filter(is.na(vpd_amp))
 
 # Model to predict VPDamp from TFC and FAST proportion
-# Multiple R-squared:  0.8446,	Adjusted R-squared:  0.8399 
+# Multiple R-squared:  0.8503,	Adjusted R-squared:  0.8457 
 mod <- lm(vpd_amp ~ sqrt_FC + fges_prop, data = train_data)
 summary(mod)
 AIC(mod)
@@ -162,7 +162,7 @@ vpd_lm_stats <- function(df, formula = difference_AWP ~  vpd_amp) {
 vpd.results <- map_df(species_list, vpd_lm_stats, .id = "dataset")  
 
 # Export stats as csv file
-fwrite(vpd.results, "vpd.infilled.stats.5.26.25.csv")
+fwrite(vpd.results, "vpd.infilled.stats.10.9.25.csv")
 
 #-------------------------------------------------------------------------------
 # Plotting
@@ -174,7 +174,7 @@ gui <- guides(fill = guide_colourbar(barwidth = 15,
                                      title.hjust = 0.5))
 
 # Color palette
-colour_PA <- scale_fill_gradientn("FC",
+colour_PA <- scale_fill_gradientn("Fractional cover",
                                   colours = c("#fc8d59","#ffffbf","#91bfdb"),
                                   values = scales::rescale(c(0,0.5,1)),
                                   limits = c(0,1),
@@ -238,7 +238,7 @@ fig <- ggarrange(plots[[1]],plots[[2]],plots[[3]], plots[[8]],plots[[5]],plots[[
 annotate_figure(
   fig,
   bottom = text_grob(expression("VPD"[amp] ~ " (kPa)"), size = 20),
-  left = text_grob(expression("AWP"[O-E] ~ " (m"^3* ~ "y"^-1*")"),
+  left = text_grob(expression("AWP"[O-E] ~ " (m"^3*" year"^-1*" ha"^-1*")"),
                    size = 20, rot = 90, vjust = 1
   )
 )

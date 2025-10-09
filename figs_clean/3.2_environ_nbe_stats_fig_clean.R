@@ -11,7 +11,7 @@ library(ggpubr)
 
 #-------------------------------------------------------------------------------
 setwd("C:/Users/maria/Desktop/Research/2024/processed_df/")
-plot.dat <- read.csv("plot.dat.5.26.25.csv")
+plot.dat <- read.csv("plot.dat.10.9.25.csv")
 
 mod <- lm(light_ratio_mid_to_open ~ vpd_amp, data = plot.dat)
 summary(mod)
@@ -73,7 +73,7 @@ gui <- guides(fill = guide_colourbar(barwidth = 15,
                                      title.position = "top",
                                      title.hjust = 0.5))
 
-colour_PA <- scale_fill_gradientn("FC",
+colour_PA <- scale_fill_gradientn("Fractional cover",
                                   colours = c("#fc8d59","#ffffbf","#91bfdb"),
                                   values = scales::rescale(c(0,0.5,1)),
                                   limits = c(0,1),

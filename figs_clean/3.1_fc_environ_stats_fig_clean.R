@@ -15,7 +15,7 @@ library(viridis)
 
 # Read data
 setwd("C:/Users/maria/Desktop/Research/2024/processed_df/")
-plot.dat <- read.csv("plot.dat.5.26.25.csv")
+plot.dat <- read.csv("plot.dat.10.9.25.csv")
 
 #-------------------------------------------------------------------------------
 # THIS WORKS
@@ -63,7 +63,7 @@ gui <- guides(fill = guide_colourbar(barwidth = 15,
                                      title.hjust = 0.5))
 
 #Color Palette
-colour_PA <- scale_fill_viridis("Proportion FAST",
+colour_PA <- scale_fill_viridis("Proportion FAST species",
                                 option = "D",
                                 direction = -1,
                                 begin = 0,
