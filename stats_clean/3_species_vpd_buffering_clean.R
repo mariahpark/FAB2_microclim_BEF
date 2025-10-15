@@ -20,7 +20,7 @@ conflict_prefer("summarise", "dplyr")
 conflicts_prefer(dplyr::filter)
 
 setwd("C:/Users/maria/Desktop/Research/2024/processed_df/")
-plot.dat <- read.csv("plot.dat.5.26.25.csv")
+plot.dat <- read.csv("plot.dat.10.9.25.csv")
 
 #-------------------------------------------------------------------------------
 # Filter monocultures

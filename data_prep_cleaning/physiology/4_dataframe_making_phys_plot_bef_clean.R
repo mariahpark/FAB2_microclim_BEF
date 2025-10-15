@@ -11,7 +11,7 @@ conflict_prefer("summarise", "dplyr")
 conflicts_prefer(dplyr::filter)
 
 setwd("C:/Users/maria/Desktop/Research/2024/processed_df/")
-dat <- read.csv("combo.dat.2024.all.plots.trait.means.10.9.25.csv")
+dat <- read.csv("combo.dat.2024.all.plots.trait.means.10.13.25.csv")
 
 
 # Find outlier for vpd_amp --plot 97: had fallen on ground
@@ -36,7 +36,7 @@ plot.dat <- dat %>% distinct(plot, .keep_all = TRUE)
 
 
 ##export data
-fwrite(plot.dat, "C:/Users/maria/Desktop/Research/2024/processed_df/plot.dat.10.9.25.csv")
-fwrite(phys.dat, "C:/Users/maria/Desktop/Research/2024/processed_df/phys.dat.10.9.25.csv")
-fwrite(species.dat, "C:/Users/maria/Desktop/Research/2024/processed_df/species.dat.10.9.25.csv")
+fwrite(plot.dat, "C:/Users/maria/Desktop/Research/2024/processed_df/plot.dat.10.13.25.csv")
+fwrite(phys.dat, "C:/Users/maria/Desktop/Research/2024/processed_df/phys.dat.10.13.25.csv")
+fwrite(species.dat, "C:/Users/maria/Desktop/Research/2024/processed_df/species.dat.10.13.25.csv")
 

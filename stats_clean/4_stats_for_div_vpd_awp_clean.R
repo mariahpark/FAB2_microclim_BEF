@@ -20,7 +20,7 @@ conflicts_prefer(dplyr::filter)
 # Read data
 
 setwd("C:/Users/maria/Desktop/Research/2024/processed_df/")
-combo.dat <- read.csv("species.dat.5.26.25.csv")
+combo.dat <- read.csv("species.dat.10.9.25.csv")
 
 #-------------------------------------------------------------------------------
 # Make sure each species has plot-level metrics associated
@@ -132,4 +132,4 @@ vpd.results$test <- "VPD_pre_infill"
 results.list <- rbind(psv.results, sr.results, pd.results, fd.results,
                       fsv.results, vpd.results)
 
-fwrite(results.list, "diversity.vpd.awp.stats.5.26.25.csv")
+fwrite(results.list, "diversity.vpd.awp.stats.10.9.25.csv")

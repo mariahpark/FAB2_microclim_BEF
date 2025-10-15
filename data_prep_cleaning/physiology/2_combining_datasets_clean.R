@@ -128,6 +128,6 @@ dat$lma <- (dat$lma_dry_weight_g)/(dat$total.leaf.area.m2)
 dat$species_code.x <- as.factor(dat$species_code.x)
 
 # Export data
-fwrite(dat, "C:/Users/maria/Desktop/Research/2024/processed_df/combo.dat.2024.10.9.25.csv")
+fwrite(dat, "C:/Users/maria/Desktop/Research/2024/processed_df/combo.dat.2024.10.13.25.csv")
 
 

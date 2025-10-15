@@ -17,7 +17,7 @@ conflicts_prefer(dplyr::filter)
 
 # Read data
 setwd("C:/Users/maria/Desktop/Research/2024/processed_df/")
-phys.only <- read.csv("phys.dat.5.26.25.csv")
+phys.only <- read.csv("phys.dat.10.9.25.csv")
 
 #-------------------------------------------------------------------------------
 # Change VWC range from decimal to %
@@ -229,4 +229,4 @@ results.list <- rbind(gsw.c.df, lig.cms.df, lig.lma.df, vpd.gsw.df, vpd.lma.df, 
                 vpd.wc.df, vwc.gsw.df, vwc.lma.df, vwc.wc.df, wc.cms.df)
 
 
-fwrite(results.list, "phys.stats.5.26.25.csv")
+fwrite(results.list, "phys.stats.10.9.25.csv")
