@@ -140,5 +140,3 @@ summary(mod)
 
 mod <- lm(light_ratio_mid_to_open ~ FC, data = plot.dat)
 summary(mod)
-
-

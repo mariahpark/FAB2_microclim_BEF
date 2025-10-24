@@ -31,7 +31,7 @@ gui <- guides(fill = guide_colourbar(barwidth = 15,
                                      title.hjust = 0.5))
 
 
-colour_PA <- scale_fill_gradientn("FC",
+colour_PA <- scale_fill_gradientn("Fractional cover",
                                   colours = c("#fc8d59","#ffffbf","#91bfdb"),
                                   values = scales::rescale(c(0,0.5,1)),
                                   limits = c(0,1),
