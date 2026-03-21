@@ -20,7 +20,8 @@ conflicts_prefer(dplyr::filter)
 # Read data
 
 setwd("C:/Users/maria/Desktop/Research/2024/processed_df/")
-combo.dat <- read.csv("species.dat.10.9.25.csv")
+#combo.dat <- read.csv("species.dat.10.9.25.csv")
+combo.dat <- read.csv("species.dat.3.19.26.csv")
 
 #-------------------------------------------------------------------------------
 # Make sure each species has plot-level metrics associated
@@ -66,55 +67,103 @@ species_list <- list(tiam = tiam, acne = acne, acru = acru, qual = qual, quru = 
 # VPD (only observed, pre-infilled data)
 
 # Phylogenetic species variability
-psv_lm_stats <- function(df, formula = difference_AWP ~  PSVs) {
+psv_lm_stats <- function(df, formula = difference_AWP ~ PSVs) {
   model <- lm(formula, data = df)
-  tidy(model) %>%
-    select(term, estimate, std.error, statistic, p.value)
+  
+  r2 <- broom::glance(model) %>%
+    dplyr::select(r.squared, adj.r.squared)
+  
+  broom::tidy(model) %>%
+    dplyr::select(term, estimate, std.error, statistic, p.value) %>%
+    dplyr::mutate(
+      r.squared = r2$r.squared,
+      adj.r.squared = r2$adj.r.squared
+    )
 }
 
 psv.results <- map_df(species_list, psv_lm_stats, .id = "dataset")  
 
 # Species richness
-sr_lm_stats <- function(df, formula = difference_AWP ~  SR.y) {
+sr_lm_stats <- function(df, formula = difference_AWP ~ SR.y) {
   model <- lm(formula, data = df)
-  tidy(model) %>%
-    select(term, estimate, std.error, statistic, p.value)
+  
+  r2 <- broom::glance(model) %>%
+    dplyr::select(r.squared, adj.r.squared)
+  
+  broom::tidy(model) %>%
+    dplyr::select(term, estimate, std.error, statistic, p.value) %>%
+    dplyr::mutate(
+      r.squared = r2$r.squared,
+      adj.r.squared = r2$adj.r.squared
+    )
 }
 
 sr.results <- map_df(species_list, sr_lm_stats, .id = "dataset")  
 
 # Phylogenetic diversity
-pd_lm_stats <- function(df, formula = difference_AWP ~  faith.no.root.PD) {
+pd_lm_stats <- function(df, formula = difference_AWP ~ faith.no.root.PD) {
   model <- lm(formula, data = df)
-  tidy(model) %>%
-    select(term, estimate, std.error, statistic, p.value)
+  
+  r2 <- broom::glance(model) %>%
+    dplyr::select(r.squared, adj.r.squared)
+  
+  broom::tidy(model) %>%
+    dplyr::select(term, estimate, std.error, statistic, p.value) %>%
+    dplyr::mutate(
+      r.squared = r2$r.squared,
+      adj.r.squared = r2$adj.r.squared
+    )
 }
 
 pd.results <- map_df(species_list, pd_lm_stats, .id = "dataset")  
 
 # Functional diversity
-fd_lm_stats <- function(df, formula = difference_AWP ~  FD_faith.no.root_PD) {
+fd_lm_stats <- function(df, formula = difference_AWP ~ FD_faith.no.root_PD) {
   model <- lm(formula, data = df)
-  tidy(model) %>%
-    select(term, estimate, std.error, statistic, p.value)
+  
+  r2 <- broom::glance(model) %>%
+    dplyr::select(r.squared, adj.r.squared)
+  
+  broom::tidy(model) %>%
+    dplyr::select(term, estimate, std.error, statistic, p.value) %>%
+    dplyr::mutate(
+      r.squared = r2$r.squared,
+      adj.r.squared = r2$adj.r.squared
+    )
 }
 
 fd.results <- map_df(species_list, fd_lm_stats, .id = "dataset")  
 
 # Functional species variability
-fsv_lm_stats <- function(df, formula = difference_AWP ~  FD_PSV) {
+fsv_lm_stats <- function(df, formula = difference_AWP ~ FD_PSV) {
   model <- lm(formula, data = df)
-  tidy(model) %>%
-    select(term, estimate, std.error, statistic, p.value)
+  
+  r2 <- broom::glance(model) %>%
+    dplyr::select(r.squared, adj.r.squared)
+  
+  broom::tidy(model) %>%
+    dplyr::select(term, estimate, std.error, statistic, p.value) %>%
+    dplyr::mutate(
+      r.squared = r2$r.squared,
+      adj.r.squared = r2$adj.r.squared
+    )
 }
 
 fsv.results <- map_df(species_list, fsv_lm_stats, .id = "dataset")  
 
 # Vapor pressure deficit amplitude
-vpd_lm_stats <- function(df, formula = difference_AWP ~  vpd_amp) {
+vpd_lm_stats <- function(df, formula = difference_AWP ~ vpd_amp) {
   model <- lm(formula, data = df)
-  tidy(model) %>%
-    select(term, estimate, std.error, statistic, p.value)
+  
+  r2 <- broom::glance(model) %>%
+    dplyr::select(r.squared, adj.r.squared)
+  
+  broom::tidy(model) %>%
+    dplyr::select(term, estimate, std.error, statistic, p.value) %>%
+    dplyr::mutate(
+      r.squared = r2$r.squared,
+      adj.r.squared = r2$adj.r.squared
+    )
 }
 
 vpd.results <- map_df(species_list, vpd_lm_stats, .id = "dataset")
@@ -132,4 +181,4 @@ vpd.results$test <- "VPD_pre_infill"
 results.list <- rbind(psv.results, sr.results, pd.results, fd.results,
                       fsv.results, vpd.results)
 
-fwrite(results.list, "diversity.vpd.awp.stats.10.9.25.csv")
+fwrite(results.list, "diversity.vpd.awp.stats.3.19.26.csv")

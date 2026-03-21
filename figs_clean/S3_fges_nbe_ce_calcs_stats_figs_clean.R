@@ -11,6 +11,7 @@ library(ggpmisc)
 library(tidyverse)
 library(conflicted)
 library(ggpubr)
+library(sjstats)
 
 conflict_prefer("mutate", "dplyr")
 conflict_prefer("summarise", "dplyr")
@@ -38,6 +39,29 @@ poly <- plot.dat.merged %>% filter(SR.y != 1)
 mono$Treatment <- "Monoculture"
 poly$Treatment <- "Polyculture"
 
+
+#-------------------------------------------------------------------------------
+# Calculate effect size
+
+anova_effect_size <- function(model) {
+  aov_df <- as.data.frame(anova(model))
+  aov_df$term <- rownames(aov_df)
+  
+  ss_total <- sum(aov_df$`Sum Sq`, na.rm = TRUE)
+  ss_resid <- aov_df$`Sum Sq`[aov_df$term == "Residuals"]
+  
+  aov_df <- aov_df[aov_df$term != "Residuals", ]
+  
+  dplyr::mutate(
+    aov_df,
+    eta_sq = `Sum Sq` / ss_total,
+    partial_eta_sq = `Sum Sq` / (`Sum Sq` + ss_resid)
+  ) %>%
+    dplyr::select(term, Df, eta_sq, partial_eta_sq, `F value`, `Pr(>F)`)
+}
+
+
+
 #-------------------------------------------------------------------------------
 # Models comparing FGES proportion effect on CE, SE, NBE
 mod <- lm(CE.sm ~ fges_prop, data = poly)
@@ -49,14 +73,19 @@ poly$fges_50 <- as.factor(poly$fges_50)
 anova.mod <- aov(CE.sm ~ fges_50, data = poly)
 summary(anova.mod)
 TukeyHSD(anova.mod)
+anova_effect_size(anova.mod)
+
+264181/(264181+4514846)
 
 anova.mod <- aov(SE.sm ~ fges_50, data = poly)
 summary(anova.mod)
 TukeyHSD(anova.mod)
+anova_effect_size(anova.mod)
 
 anova.mod <- aov(NE.sm ~ fges_50, data = poly)
 summary(anova.mod)
 TukeyHSD(anova.mod)
+anova_effect_size(anova.mod)
 
 factors.mod <- lm(NE.sm ~ CE.sm + SE.sm, data = poly)
 summary(factors.mod)

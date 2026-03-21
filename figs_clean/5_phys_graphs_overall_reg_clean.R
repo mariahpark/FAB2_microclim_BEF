@@ -18,7 +18,8 @@ conflicts_prefer(dplyr::filter)
 
 # Read data
 setwd("C:/Users/maria/Desktop/Research/2024/processed_df/")
-phys.dat <- read.csv("phys.dat.10.9.25.csv")
+#phys.dat <- read.csv("phys.dat.10.9.25.csv")
+phys.dat <- read.csv("phys.dat.3.19.26.csv")
 
 # Set color palette
 Palette <- c( "#CC79A7", "#56B4E9", "#D55E00","#009E73")

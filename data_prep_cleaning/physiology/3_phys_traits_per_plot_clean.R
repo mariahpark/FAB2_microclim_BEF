@@ -9,12 +9,13 @@ conflict_prefer("mutate", "dplyr")
 conflict_prefer("summarise", "dplyr")
 
 setwd("C:/Users/maria/Desktop/Research/2024/processed_df/")
-dat <- read.csv("combo.dat.2024.10.13.25.csv")
+dat <- read.csv("combo.dat.2024.3.19.26.csv")
+#dat <- read.csv("combo.dat.2024.10.13.25.csv")
 
 #-------------------------------------------------------------------------------
 # Make sure all plots have plot level metrics
 # Fill missing values using aggregate
-for (metric in c(89:158)) {
+for (metric in c(81:179)) {
   dat[metric] <- ave(dat[[metric]], dat$plot, FUN = function(x) {
     ifelse(is.na(x), mean(x, na.rm = TRUE), x)
   })
@@ -53,4 +54,5 @@ print(avg.traits.plot)
 dat.merged <- merge(dat, avg.phys.plot, by = c("plot","species_code.x"))
 dat.merged <- merge(dat.merged, avg.traits.plot, by = c("plot","species_code.x"))
 
-fwrite(dat.merged, "combo.dat.2024.all.plots.trait.means.10.13.25.csv")
+
+fwrite(dat.merged, "combo.dat.2024.all.plots.trait.means.3.19.26.csv")

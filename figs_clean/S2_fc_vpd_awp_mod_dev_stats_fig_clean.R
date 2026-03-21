@@ -13,6 +13,8 @@ library(tidyverse)
 library(conflicted)
 library(ggpubr)
 library(purrr)
+library(broom)
+library(data.table)
 
 conflict_prefer("mutate", "dplyr")
 conflict_prefer("summarise", "dplyr")
@@ -22,10 +24,11 @@ conflicts_prefer(dplyr::filter)
 # Read data
 
 setwd("C:/Users/maria/Desktop/Research/2024/processed_df/")
-plot.dat <- read.csv("plot.dat.10.9.25.csv")
+plot.dat <- read.csv("plot.dat.3.19.26.csv")
+#plot.dat <- read.csv("plot.dat.10.9.25.csv")
 prod.dat <- read.csv("productivity.small.2024.10.9.25.csv")
 
-#make a new variable: transformed FC (TFC) = sqrt_FC
+#make a new variable: transformed FC (TFC) = -sqrt_FC
 plot.dat$sqrt_FC <- -sqrt(1-plot.dat$FC)
 
 #-------------------------------------------------------------------------------
@@ -47,6 +50,41 @@ mod <- lm(vpd_amp ~ sqrt_FC + fges_prop, data = train_data)
 summary(mod)
 AIC(mod)
 
+# Model diagnostics
+# Residual plots
+par(mfrow = c(2,2))
+plot(mod)
+
+# Normality test
+shapiro.test(residuals(mod))
+
+# Multicollinearity test
+## VIS < 5; fine
+car::vif(mod)
+
+# Heteroskedasticity
+lmtest::bptest(mod)
+
+# Influence diagnostics
+plot(cooks.distance(mod))
+
+# Tidy summary
+stats <- broom::tidy(mod)
+stats2 <- broom::glance(mod)
+
+plot(predict(mod), residuals(mod))
+abline(h = 0, lty = 2)
+
+library(sandwich)
+library(lmtest)
+
+coeftest(mod, vcov = vcovHC(mod, type = "HC3"))
+
+# Export model stats
+fwrite(stats, "vpd.mod.stats.3.19.26.csv")
+fwrite(stats2, "vpd.mod.stats2.3.19.26.csv")
+
+#----mod#-------------------------------------------------------------------------------
 # Predict missing values
 pred_vals <- predict(mod, newdata = test_data)
 

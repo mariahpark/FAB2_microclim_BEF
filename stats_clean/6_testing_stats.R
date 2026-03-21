@@ -20,7 +20,8 @@ setwd("C:/Users/maria/Desktop/Research/2024/psr/predicted_traits")
 spectra <- read.csv("USE_fab_jul_2024_traits_PLSR.csv")
 
 setwd("C:/Users/maria/Desktop/Research/2024/processed_df/")
-plot.dat <- read.csv("plot.dat.10.13.25.csv")
+#plot.dat <- read.csv("plot.dat.10.13.25.csv")
+plot.dat <- read.csv("plot.dat.3.19.26.csv")
 
 phys.dat <- read.csv("phys.dat.10.13.25.csv")
 
@@ -38,7 +39,8 @@ mean(spectra$WC.sd)
 # TFC calculation
 plot.dat$TFC <- -sqrt(1-plot.dat$FC)
 
-
+# FAST and FC
+summary(lm(FC ~ fges_prop, data = plot.dat))
 
 # FC and VPD
 summary(lm(vpd_q95 ~ FC, data = plot.dat))

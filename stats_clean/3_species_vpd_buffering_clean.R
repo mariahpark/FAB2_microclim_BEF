@@ -14,13 +14,17 @@ library(broom)
 library(ggpmisc)
 library(lmtest)
 library(conflicted)
+library(splines)
 
 conflict_prefer("mutate", "dplyr")
 conflict_prefer("summarise", "dplyr")
 conflicts_prefer(dplyr::filter)
 
 setwd("C:/Users/maria/Desktop/Research/2024/processed_df/")
-plot.dat <- read.csv("plot.dat.10.9.25.csv")
+#plot.dat <- read.csv("plot.dat.10.9.25.csv")
+plot.dat <- read.csv("plot.dat.3.19.26.csv")
+
+poly <- filter(plot.dat, SR.x != 1)
 
 #-------------------------------------------------------------------------------
 # Filter monocultures
@@ -45,6 +49,8 @@ TukeyHSD(mod)
 mod <- aov(vpd_amp ~ fges, data = mono)
 summary(mod)
 TukeyHSD(mod)
+1.6795 / (1.6795+0.5659) # effect size
+
 
 # FGES proportion -> VPDamp
 mod <- lm(vpd_amp ~ fges_prop, data = plot.dat)
@@ -74,3 +80,34 @@ summary(mod)
 
 mod <- lm(NE.sm ~ fges_prop + PSVs, data = plot.dat)
 summary(mod)
+
+#-------------------------------------------------------------------------------
+# VPD amp ~ overyielding
+
+mod_lin <- lm(NE.sm ~ vpd_amp, data = poly)
+summary(mod)
+
+# Test for non-linearity
+mod <- lm(NE.sm ~ vpd_amp, data = poly)
+summary(mod)
+
+plot(fitted(mod), resid(mod))
+abline(h = 0, col = "red")
+
+
+mod_lin  <- lm(NE.sm ~ vpd_amp, data = poly)
+mod_quad <- lm(NE.sm ~ vpd_amp + I(vpd_amp^2), data = poly)
+
+# Quadratic fits better
+anova(mod_lin, mod_quad)
+
+AIC(mod_lin)
+AIC(mod_quad)
+
+# Spline
+
+mod_spline <- lm(NE.sm ~ ns(vpd_amp, df = 3), data = poly)
+summary(mod_spline)
+
+
+anova(mod_lin, mod_spline)

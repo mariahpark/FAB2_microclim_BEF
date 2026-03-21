@@ -5,7 +5,8 @@ rm(list=ls())
 library(dplyr)
 
 setwd("C:/Users/maria/Desktop/Research/2024/processed_df/")
-plot.dat <- read.csv("plot.dat.5.26.25.csv")
+#plot.dat <- read.csv("plot.dat.5.26.25.csv")
+plot.dat <- read.csv("plot.dat.3.12.26.csv")
 
 #-------------------------------------------------------------------------------
 # VWC stats testing

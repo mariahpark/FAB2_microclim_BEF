@@ -3,9 +3,9 @@
 rm(list=ls())
 
 library(dplyr)
-library(plyr)
 library(data.table)
 library(tidyverse)
+conflicts_prefer(dplyr::mutate)
 
 # Read in dataframes
 
@@ -17,13 +17,15 @@ microclim.dat <- read.csv("merged_sample_wk_amplitude_df_10.9.25.csv") # Microcl
 microclim.stats <- read.csv("merged_sample_wk_df_5_1_25_clean.csv") # Microclimate stats
 nbe.dat <- read.csv("small_plot_NBE_2024 (2025-4-22).csv") # NBE
 prop.dat <- read.csv("gymno.fges.calcs.4.22.25.csv") # Gymno and FAST proportions
-lidar.dat <- read.csv("lidar.jul.2024.csv") # LiDAR
+lidar.dat <- read.csv("lidar.jul.2024.h.csv") # LiDAR
+#lidar.dat <- read.csv("LiDAR_2024.csv")
 vwc.dat <- read.csv("vwc.july.2024.stats.5.9.25.csv") # VWC
 spectra.dat <- read.csv("spectral_indices_plsr_jul_24_5_14_25.csv") # Spectra
 lma.dat <- read.csv("lma.2024.R.csv") # LMA; slight manual cleaning so letter cases match UniqueID
 light.dat <- read.csv("light.R.clean.csv") # Light
 div.dat <- read.csv("combined.div.metrics.csv") # Diversity
 prod.dat <- read.csv("productivity.small.2024.10.9.25.csv") # Species productivity
+microclim.stable <- read.csv("microclim_szn_3.11.26.csv")
 
 #-------------------------------------------------------------------------------
 # Clean and trim data
@@ -41,7 +43,8 @@ for (obj_name in ls()) {
   }
 }
 
-
+# For sake of merging later - April LiDAR approx May (No May flight)
+#lidar.dat$month[lidar.dat$month == 4] <- 5
 
 
 # Rename plot column
@@ -114,11 +117,21 @@ dat <- merge(dat, prod.dat, by = c("species_code.x", "plot"), all = TRUE)
 dat <- merge(dat, microclim.dat, by = "plot", all = TRUE)
 dat <- merge(dat, microclim.stats, by = "plot", all = TRUE)
 dat <- merge(dat, nbe.dat, by = "plot", all = TRUE)
-dat <- merge(dat, lidar.dat, by = "plot", all = TRUE)
+
 dat <- merge(dat, vwc.jul, by = "plot", all = TRUE)
 dat <- merge(dat, light.dat, by = "plot", all = TRUE)
 dat <- merge(dat, prop.dat, by = "plot", all = TRUE)
 dat <- merge(dat, div.dat, by = "plot", all =TRUE)
+
+# Rename
+conflicts_prefer(dplyr::rename)
+microclim.stable <- rename(microclim.stable, month.x = month)
+#lidar.dat <- rename(lidar.dat, month.x = month)
+dat$plot <- as.numeric(dat$plot)
+
+dat <- merge(dat, microclim.stable, by = "plot", all =TRUE)
+dat <- merge(dat, lidar.dat, by = "plot", all = TRUE)
+#dat <- left_join(dat, lidar.dat, by = c("plot","month.x"))
 
 # Calculate LMA in terms of g/m^2
 dat$total.leaf.area.m2 <- (dat$total.leaf.area.cm)/10000
@@ -128,6 +141,6 @@ dat$lma <- (dat$lma_dry_weight_g)/(dat$total.leaf.area.m2)
 dat$species_code.x <- as.factor(dat$species_code.x)
 
 # Export data
-fwrite(dat, "C:/Users/maria/Desktop/Research/2024/processed_df/combo.dat.2024.10.13.25.csv")
+fwrite(dat, "C:/Users/maria/Desktop/Research/2024/processed_df/combo.dat.2024.3.19.26.csv")
 
 

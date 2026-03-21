@@ -15,7 +15,7 @@ library(viridis)
 
 # Read data
 setwd("C:/Users/maria/Desktop/Research/2024/processed_df/")
-plot.dat <- read.csv("plot.dat.10.9.25.csv")
+plot.dat <- read.csv("plot.dat.3.19.26.csv")
 
 #-------------------------------------------------------------------------------
 # THIS WORKS

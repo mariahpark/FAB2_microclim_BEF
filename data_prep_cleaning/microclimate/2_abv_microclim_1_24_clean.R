@@ -105,6 +105,9 @@ summer_dat_2 <- summer_dat
 summer_dat_2 <- summer_dat_2[-10]
 
 
+#-------------------------------------------------------------------------------
+# Sampling week filtering
+
 # Filter summer dat 2 for the sampling week
 filter_dat2 <- function(dat){
   filtered_dat <- dat %>% filter(date >= "2024-07-16 00:00:00" & date <= "2024-07-20 00:00:00")

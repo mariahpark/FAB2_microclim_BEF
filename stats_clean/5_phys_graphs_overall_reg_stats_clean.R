@@ -17,7 +17,8 @@ conflicts_prefer(dplyr::filter)
 
 # Read data
 setwd("C:/Users/maria/Desktop/Research/2024/processed_df/")
-phys.only <- read.csv("phys.dat.10.9.25.csv")
+#phys.only <- read.csv("phys.dat.10.9.25.csv")
+phys.only <- read.csv("phys.dat.3.19.26.csv")
 
 #-------------------------------------------------------------------------------
 # Change VWC range from decimal to %
@@ -209,6 +210,20 @@ gsw.c <- function(df, formula = avg.a.plot ~ avg.gsw.plot) {
 
 gsw.c.df <- map_df(species_list, gsw.c, .id = "dataset")
 
+# LMA -> Photosynthesis
+lma.a <- function(df, formula = avg.a.plot ~ avg.lma) {
+  model <- lm(formula, data = df)
+  tidy_df <- tidy(model) %>%
+    select(term, estimate, std.error, statistic, p.value)
+  
+  r2 <- glance(model)$r.squared
+  
+  tidy_df %>%
+    mutate(r.squared = r2)
+}
+
+lma.a.df <- map_df(species_list, lma.a, .id = "dataset")
+
 #-------------------------------------------------------------------------------
 # Add header column
 gsw.c.df$test <- "gsw.c.df"
@@ -229,4 +244,4 @@ results.list <- rbind(gsw.c.df, lig.cms.df, lig.lma.df, vpd.gsw.df, vpd.lma.df, 
                 vpd.wc.df, vwc.gsw.df, vwc.lma.df, vwc.wc.df, wc.cms.df)
 
 
-fwrite(results.list, "phys.stats.10.9.25.csv")
+fwrite(results.list, "phys.stats.3.20.26.csv")
