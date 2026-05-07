@@ -6,7 +6,7 @@ type: software
 authors:
   - family-names: "Park"
     given-names: "Maria"
-    affiliation: "University of Minnesota, Harvard University"
+    affiliation: "University of Minnesota; Harvard University"
     orcid: "https://orcid.org/0000-0003-4803-4253"
 
   - family-names: "Guzmán Q."
@@ -16,7 +16,7 @@ authors:
 
   - family-names: "Cavender-Bares"
     given-names: "Jeannine"
-    affiliation: "Harvard University, University of Minnesota"
+    affiliation: "Harvard University; University of Minnesota"
     orcid: "https://orcid.org/0000-0003-3375-9630"
 
 version: "1.4.0"
